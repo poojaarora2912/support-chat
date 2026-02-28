@@ -5,6 +5,7 @@ import ChatContainer from '../../components/chatContainer'
 import { selectChatSessionItems, selectCurrentSessionId } from '../../redux/selectors/chatResponse'
 import styles from './styles.module.scss'
 import cx from 'classnames';
+import { useOutletContext } from 'react-router-dom';
 
 const PROMPTS = [
   "What happens when 'Seek Not Available' appears on assets?",
@@ -12,7 +13,8 @@ const PROMPTS = [
   "What should I do to add custom fonts to collections?"
 ]
 
-function SupportChatbot({newChat, setNewChat}) {
+function SupportChatbot() {
+  const { newChat, setNewChat } = useOutletContext();
   const [inputAtBottom, setInputAtBottom] = useState(newChat)
   const [promptMessage, setPromptMessage] = useState(null)
   const chatScrollRef = useRef(null)
@@ -46,7 +48,7 @@ function SupportChatbot({newChat, setNewChat}) {
                   onClick={() => {
                     setPromptMessage(prompt)
                     setNewChat(true)
-                    onFormSubmit()
+                    // onFormSubmit()
                   }}
                 >
                   / {prompt}
