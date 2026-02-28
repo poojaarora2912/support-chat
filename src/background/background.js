@@ -1,10 +1,10 @@
 /* global chrome */
 
-const ALLOWED_ORIGIN = "https://app.intercom.com";
+const ALLOWED_ORIGINS = ["https://app.intercom.com", "https://admin-paperflite", "https://adminservice.api.paperflite.com"];
 
 function isIntercomTab(url) {
   if (!url || !url.startsWith("http")) return false;
-  return url.startsWith(ALLOWED_ORIGIN);
+  return ALLOWED_ORIGINS.some(origin => url.startsWith(origin));
 }
 
 function getUrlDetails(url) {
@@ -42,9 +42,9 @@ function updatePanelForTab(tabId, url) {
 
   // If disabled, tell the panel to close itself
   if (!enabled) {
-    chrome.runtime.sendMessage({ type: "CLOSE_PANEL" }).catch(() => {
-      // Panel may not be open — ignore the error
-    });
+    // chrome.runtime.sendMessage({ type: "CLOSE_PANEL" }).catch(() => {
+    //   // Panel may not be open — ignore the error
+    // });
   }
 }
 
