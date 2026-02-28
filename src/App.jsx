@@ -12,6 +12,7 @@ import AuthService from "./services/auth.service";
 import LoginPage from "./pages/login";
 import AppLayout from "./layout/AppLayout";
 import SupportChatbot from "./pages/chatbot";
+import Evaluation from "./pages/evaluation";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           }
         >
           <Route index element={<SupportChatbot />} />
+          <Route path="/evaluation" element={<Evaluation />} />
         </Route>
         {/* Catch-all: redirect to login so login page is shown first */}
         <Route path="*" element={<Navigate to="/login" replace />} />

@@ -25,6 +25,11 @@ export default function AppLayout() {
     dispatch({type: LOGOUT_USER});
     navigate('/login');
   }
+
+  const handleEvaluate = () => {
+    navigate('/evaluation');
+  }
+
   useEffect(() => {
     if (!activatedTab?.url || activatedTab.url === currentTab) return;
     setCurrentTab(activatedTab.url);
@@ -38,12 +43,14 @@ export default function AppLayout() {
 
         <div className={styles.logoutButton} onClick={handleLogout}><i className="fa-solid fa-right-from-bracket" /> </div>
       </div>
-      {showEvaluate && <div className={styles.evaluationContainer}>
+      {showEvaluate && (
+        <div className={styles.evaluationContainer} onClick={handleEvaluate}>
         Evaluate your chat <i className="fa-solid fa-arrow-right" />
-      </div>}
-      <div className={styles.content}>
-        <Outlet />
       </div>
+    )}
+    <div className={styles.content}>
+      <Outlet />
     </div>
-  );
+  </div>
+);
 }

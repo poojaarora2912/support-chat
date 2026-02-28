@@ -68,15 +68,11 @@
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background: #ff9900;
+  background: #E51058;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease, opacity 0.2s ease;
-
-  &:hover:not(:disabled) {
-    background: #e88b00;
-  }
 
   &:active:not(:disabled) {
     transform: scale(0.99);
