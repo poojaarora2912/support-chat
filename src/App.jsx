@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   HashRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
 
-import { AUTH_LOGIN_SUCCESS_EVENT } from "./constants/auth";
 import AuthService from "./services/auth.service";
 import LoginPage from "./pages/login";
 import MainPage from "./pages/main";
@@ -32,21 +32,11 @@ function App() {
 }
 
 function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() =>
-    AuthService.isAuthenticated()
+  const reduxAuthenticated = useSelector(
+    (state) => state.user?.authentication?.authenticated
   );
-
-  useEffect(() => {
-    const checkAuth = () => setIsAuthenticated(AuthService.isAuthenticated());
-
-    checkAuth();
-
-    const onLoginSuccess = () => checkAuth();
-    
-    window.addEventListener(AUTH_LOGIN_SUCCESS_EVENT, onLoginSuccess);
-    return () =>
-      window.removeEventListener(AUTH_LOGIN_SUCCESS_EVENT, onLoginSuccess);
-  }, []);
+  const isAuthenticated =
+    reduxAuthenticated === true || AuthService.isAuthenticated();
 
   if (!isAuthenticated) {
     return <LoginPage />;

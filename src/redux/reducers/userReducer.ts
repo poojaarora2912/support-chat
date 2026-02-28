@@ -28,7 +28,11 @@ const userReducer = (state = initialState, action: UnknownAction) => {
     case FETCHING_COGNITO_ACCESS_TOKEN:
       return {
         ...state,
-        authentication: { ...state.authentication, authenticating: true },
+        authentication: {
+          ...state.authentication,
+          authenticating: true,
+          error: null,
+        },
       };
 
     case FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED:
