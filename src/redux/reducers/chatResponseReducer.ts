@@ -148,10 +148,7 @@ const chatResponseReducer = (state = initialState, action: UnknownAction) => {
     case INVALIDATE_CHAT_RESPONSE: {
       return {
         ...state,
-        chatSession: {
-          ...state.chatSession,
-          pendingFirstMessage: null,
-        },
+        chatSession: { },
       };
     }
 
