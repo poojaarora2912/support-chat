@@ -10,16 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
+    "react": "^19.2.0",
+    "react-bootstrap": "^2.10.10",
+    "react-lines-ellipsis": "^0.16.1",
+    "react-router-dom": "^7.13.1",
     "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.13.6",
     "build-url": "^6.0.1",
     "build-url-ts": "^6.2.0",
-    "classnames": "^2.5.1",
     "lodash": "^4.17.23",
-    "react": "^19.2.4",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.13.1",
     "redux": "^5.0.1",
     "redux-actions": "^3.0.3",
     "redux-saga": "^1.4.2",
@@ -36,6 +38,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "sass": "^1.97.3",
+    "sass-embedded": "^1.97.3",
     "vite": "^7.3.1"
   }
 }
