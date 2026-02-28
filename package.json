@@ -10,8 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
+    "build-url": "^6.0.1",
+    "build-url-ts": "^6.2.0",
+    "classnames": "^2.5.1",
+    "lodash": "^4.17.23",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.1",
+    "redux": "^5.0.1",
+    "redux-actions": "^3.0.3",
+    "redux-saga": "^1.4.2",
+    "saas": "^1.0.0",
+    "sass-embedded": "^1.97.3"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.33",

@@ -1,0 +1,1 @@
+export const UNKNOWN_ERROR = 99999;
