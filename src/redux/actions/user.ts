@@ -2,7 +2,7 @@ import axios from "axios";
 import buildUrl from "build-url-ts";
 import { createAction } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { FETCHING_COGNITO_ACCESS_TOKEN, FETCHING_COGNITO_ACCESS_TOKEN_FAILED, FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED } from "../../constants/actionTypes";
+import { FETCHING_COGNITO_ACCESS_TOKEN, FETCHING_COGNITO_ACCESS_TOKEN_FAILED, FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED, LOGOUT_USER } from "../../constants/actionTypes";
 import AuthService from "../../services/auth.service";
 
 const env = (import.meta as unknown as { env: Record<string, string> }).env;

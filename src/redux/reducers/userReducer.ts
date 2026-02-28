@@ -1,6 +1,7 @@
 import { type UnknownAction } from "@reduxjs/toolkit";
 
 import {
+  LOGOUT_USER,
   FETCHING_COGNITO_ACCESS_TOKEN,
   FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED,
   FETCHING_COGNITO_ACCESS_TOKEN_FAILED,
@@ -56,7 +57,10 @@ const userReducer = (state = initialState, action: UnknownAction) => {
           error: action.payload,
         },
       };
-      
+
+    case LOGOUT_USER:
+      return initialState;
+
     default:
       return state;
   }

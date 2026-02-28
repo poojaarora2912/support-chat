@@ -1,8 +1,22 @@
-import userReducer from "./userReducer";
 import { combineReducers } from "redux";
 
-const rootReducer = combineReducers({
+import { LOGOUT_USER } from "../../constants/actionTypes";
+
+import AuthService from "../../services/auth.service";
+import userReducer from "./userReducer";
+
+
+const appReducer = combineReducers({
     user: userReducer,
 });
+
+export const rootReducer = (state, action) => {
+    if (action.type == LOGOUT_USER) {
+      state = undefined;
+      AuthService.clearAccessToken();
+    }
+  
+    return appReducer(state, action);
+  };
 
 export default rootReducer;
