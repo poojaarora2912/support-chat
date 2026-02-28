@@ -1,10 +1,13 @@
 {
     "manifest_version": 3,
-    "name": "My Extension",
+    "name": "Support Chatbot",
     "version": "1.0.0",
-    "description": "My first Chrome extension",
+    "description": "Support Chatbot for Paperflite",
     "action": {
     },
+    "icons": {
+        "128": "images/icon-128.png"
+      },
     "side_panel": {
       "default_path": "index.html"
     },
