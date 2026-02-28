@@ -28,13 +28,13 @@ export interface Evaluation {
 }
 
 interface EvaluationState {
-  evaluations: Record<string, Evaluation>;
+  items: Record<string, Evaluation>;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: EvaluationState = {
-  evaluations: {},
+  items: {},
   loading: false,
   error: null,
 };
@@ -43,21 +43,27 @@ const evaluationReducer = (state = initialState, action: UnknownAction) => {
   switch (action.type) {
     case FETCH_EVALUATION:
       return { ...state, loading: true };
-      
+
     case FETCH_EVALUATION_SUCCEEDED: {
-      const { id, evaluation } = action.payload as { id: string, evaluation: Evaluation };
-      
+      const { id, evaluation: evaluationData } = action.payload as {
+        id: string;
+        evaluation: Evaluation;
+      };
+
       return {
         ...state,
-        evaluations: {
-          ...state.evaluations,
-          [id]: evaluation,
+        items: {
+          ...state.items,
+          [id]: evaluationData,
         },
         loading: false,
       };
     }
     case FETCH_EVALUATION_FAILED:
       return { ...state, error: action.payload, loading: false };
+
+    default:
+      return state;
   }
 };
 

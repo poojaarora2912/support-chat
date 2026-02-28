@@ -11,7 +11,6 @@ const initialState: SelectionState = {
 };
 
 const selectionReducer = (state = initialState, action: UnknownAction): SelectionState => {
-    console.log('selectionReducer', action.type, action.payload)
   switch (action.type) {
     case ACTIVATED_TAB:
       return {

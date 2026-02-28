@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
@@ -7,6 +7,7 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+
 
 import AuthService from "./services/auth.service";
 import LoginPage from "./pages/login";
@@ -31,7 +32,7 @@ function App() {
           <Route index element={<SupportChatbot />} />
           <Route path="/evaluation" element={<Evaluation />} />
         </Route>
-        {/* Catch-all: redirect to login so login page is shown first */}
+      
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

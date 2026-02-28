@@ -1,18 +1,15 @@
 import axios from "axios";
-import buildUrl from "build-url-ts";
 import { createAction } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { FETCHING_COGNITO_ACCESS_TOKEN, FETCHING_COGNITO_ACCESS_TOKEN_FAILED, FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED, LOGOUT_USER } from "../../constants/actionTypes";
 import AuthService from "../../services/auth.service";
 
 const env = (import.meta as unknown as { env: Record<string, string> }).env;
-const API_URL = env.REACT_APP_API_URL;
 const API_URL_V2 = env.REACT_APP_API_URL_V2;
 
 const OAUTH_URL = `${API_URL_V2}/admin/auth/3.0/oauth/token`;
 const REFRESH_TOKEN_URL = `${OAUTH_URL}/refresh`;
 
-/** fetch oauth access token (payload: { code, state } from OAuth callback) */
 export const fetchOAuthToken = createAction(FETCHING_COGNITO_ACCESS_TOKEN);
 export const fetchingOAuthTokenSucceeded = createAction(FETCHING_COGNITO_ACCESS_TOKEN_SUCCEEDED);
 export const fetchingOAuthTokenFailed = createAction(FETCHING_COGNITO_ACCESS_TOKEN_FAILED);

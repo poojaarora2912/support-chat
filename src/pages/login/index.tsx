@@ -12,12 +12,6 @@ const API_URL_V2 = env?.REACT_APP_API_URL_V2 ?? "";
 export default function LoginPage() {
   return (
     <div className={styles.content}>
-      {/* <div className={styles.left}>
-        <div className={styles.inner}>
-          <img src="/images/paperflite.jpg" alt="Logo" className={styles.logo} />
-          <h1 className={styles.heading}>Paperflite Support Chat</h1>
-        </div>
-      </div> */}
       <div className={styles.right}>
         <SignInForm />
       </div>
@@ -95,19 +89,20 @@ function SignInForm() {
   }, [stableListener]);
 
   return (
-    <div className={styles.form}>
-      <h2 className={styles.header}>
-        Sign in to Paperflite Support Chat!
-      </h2>
-      <form className={styles.formInner} onSubmit={handleAuthenticate}>
-        <button
-          type="submit"
-          className={styles.btnAwsLogin}
-          disabled={authenticating}
-        >
-          {authenticating ? "Signing in…" : "Sign in with AWS Cognito"}
-        </button>
-      </form>
+    <div className={styles.formCard}>
+      <div className={styles.form}>
+        <img src="/images/paperflite.svg" alt="Paperflite" className={styles.logo} width={72} height={72} />
+        <h1 className={styles.header}>Sign in to Paperflite Support Chat</h1>
+        <form className={styles.formInner} onSubmit={handleAuthenticate}>
+          <button
+            type="submit"
+            className={styles.btnAwsLogin}
+            disabled={authenticating}
+          >
+            {authenticating ? "Signing in…" : "Sign in with AWS Cognito"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

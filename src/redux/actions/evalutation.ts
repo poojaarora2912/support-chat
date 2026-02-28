@@ -17,6 +17,7 @@ const AUDIT_URL = `${SUPPORT_API_URL}/api/v1/support_eval/audit`;
 export const fetchEvaluation = (id: string) => {
   return {
     type: FETCH_EVALUATION,
+    payload: { id },
   };
 };
 
@@ -27,12 +28,21 @@ export const fetchEvaluationSucceeded = (evaluation: any) => {
   };
 };
 
-export const fetchEvaluationFailed = (error: any) => {
+export const fetchEvaluationFailed = (message: string) => {
   return {
     type: FETCH_EVALUATION_FAILED,
-    payload: error,
+    payload: message,
   };
 };
+
+function getSerializableErrorMessage(error: unknown): string {
+  if (axios.isAxiosError(error)) {
+    const data = error.response?.data as { detail?: string; message?: string } | undefined;
+    return data?.detail ?? data?.message ?? error.message ?? "Failed to load evaluation.";
+  }
+  if (error instanceof Error) return error.message;
+  return "Failed to load evaluation.";
+}
 
 export function* fetchEvaluationSaga(
     action: ReturnType<typeof fetchEvaluation>
@@ -45,9 +55,9 @@ export function* fetchEvaluationSaga(
 
   try {
     const response = yield call(fetchEvaluationAPI);
-    yield put(fetchEvaluationSucceeded({ id, evaluation: response.data }));
+    yield put(fetchEvaluationSucceeded({ id, evaluation: response }));
   } catch (error) {
-    yield put(fetchEvaluationFailed(error));
+    yield put(fetchEvaluationFailed(getSerializableErrorMessage(error)));
   }
 }
 

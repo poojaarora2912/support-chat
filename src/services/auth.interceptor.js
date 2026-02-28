@@ -9,13 +9,25 @@ let subscribers = [];
 
 const apiUrl = import.meta.env.REACT_APP_API_URL;
 const apiUrlV2 = import.meta.env.REACT_APP_API_URL_V2;
+const supportApiUrl = import.meta.env.REACT_APP_SUPPORT_API_URL || "";
 
 const OAUTH_URL = `${apiUrlV2}/admin/auth/3.0/oauth/token`;
+
+const isAuthenticatedRequest = (url) => {
+  if (!url) return false;
+  const isOAuth = url.startsWith(OAUTH_URL);
+  if (isOAuth) return false;
+  return (
+    url.startsWith(apiUrl) ||
+    url.startsWith(apiUrlV2) ||
+    (supportApiUrl && url.startsWith(supportApiUrl))
+  );
+};
 
 export default function() {
     axios.interceptors.request.use(function(config) {
       if (AuthService.isAuthenticated()) {
-        if ((config.url.startsWith(apiUrl) || config.url.startsWith(apiUrlV2)) && !config.url.startsWith(OAUTH_URL)) {
+        if (isAuthenticatedRequest(config.url)) {
           config.headers.Authorization = "Bearer " + AuthService.getAccessToken();
         }
       }
@@ -52,7 +64,6 @@ export default function() {
               .then((token) => {
                 isAlreadyFetchingAccessToken = false;
   
-                console.log("token: ", token);
                 if (token && token.data && token.data.access_token) {
                   AuthService.saveAccessToken(token.data.access_token);
                   onAccessTokenFetched(token.data.access_token);

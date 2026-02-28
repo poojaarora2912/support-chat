@@ -6,6 +6,9 @@ import './index.css'
 import App from './App.jsx'
 import store from './redux/store'
 import { selectActivatedTab } from './redux/actions/selection'
+import setupAuthInterceptor from './services/auth.interceptor'
+
+setupAuthInterceptor()
 
 if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
   chrome.runtime.onMessage.addListener((message) => {
@@ -13,7 +16,6 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       window.close()
     }
     if (message.type === 'ACTIVATED_TAB' && message.payload) {
-      console.log('ACTIVATED_TAB', message.payload)
       store.dispatch(selectActivatedTab(message.payload))
     }
   })

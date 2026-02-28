@@ -5,12 +5,12 @@ import { LOGOUT_USER } from "../../constants/actionTypes";
 import AuthService from "../../services/auth.service";
 import userReducer from "./userReducer";
 import selectionReducer from "./selectionReducer";
-
-
+import evaluationReducer from "./evaluationReducer";
 
 const appReducer = combineReducers({
     user: userReducer,
     selection: selectionReducer,
+    evaluation: evaluationReducer,
 });
 
 export const rootReducer = (state, action) => {
