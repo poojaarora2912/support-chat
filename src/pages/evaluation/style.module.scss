@@ -1,0 +1,301 @@
+// Palette: warm neutrals + brand accent (#E51058)
+$bg: #f8f7f5;
+$bgCard: #ffffff;
+$text: #1a1a1a;
+$textMuted: #5c5c5c;
+$accent: #E51058;
+$accentSoft: rgba(229, 16, 88, 0.08);
+$border: #e8e6e3;
+$borderFocus: #d4d0ca;
+
+// Shadows
+$shadowSm: 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadowMd: 0 4px 12px rgba(0, 0, 0, 0.06);
+$shadowCard: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #faf9f7 0%, $bg 12%);
+  color: $text;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  &.containerFullScreen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+.inner {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 1.25rem;
+  margin: 0 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.messageWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.loaderText {
+  font-size: 0.95rem;
+  color: $textMuted;
+  letter-spacing: 0.02em;
+  animation: fadeSlide 0.4s ease forwards;
+}
+
+.dot {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: $accent;
+  position: relative;
+  animation: pulse 1.2s infinite ease-in-out;
+  box-shadow: 0 0 0 rgba(229, 16, 88, 0.5);
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.85);
+    box-shadow: 0 0 0 0 rgba(229, 16, 88, 0.5);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 16px rgba(229, 16, 88, 0);
+  }
+  100% {
+    transform: scale(0.85);
+    box-shadow: 0 0 0 0 rgba(229, 16, 88, 0);
+  }
+}
+
+.header {
+  flex-shrink: 0;
+  min-width: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+
+  .backButton {
+    flex-shrink: 0;
+    color: #060606;
+    font-size: 1rem;
+    font-weight: 500;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+    position: relative;
+    left: 0;
+    transition: color 0.2s ease, left 0.2s ease;
+
+    margin-bottom: 0.6rem;
+
+    &:hover {
+      cursor: pointer;
+      color: $accent;
+      left: 0.25rem;
+    }
+  }
+
+  .title {
+    margin: 0 0 0.6rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: $text;
+    letter-spacing: -0.02em;
+  }
+
+  .fatalRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: $shadowSm;
+  background: $accentSoft;
+  color: $accent;
+  border: 1px solid rgba(229, 16, 88, 0.25);
+}
+
+.fatalReasons {
+  margin-top: 0.6rem;
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  color: $textMuted;
+  line-height: 1.5;
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.section {
+  min-width: 0;
+  margin-bottom: 1.5rem;
+
+  .sectionTitle {
+    margin: 0 0 0.85rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: $text;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, $border 0%, transparent 100%);
+      max-width: 120px;
+    }
+  }
+}
+
+.scoresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  min-width: 0;
+
+  @media (min-width: 520px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.scoreCard {
+  min-width: 0;
+  background: linear-gradient(90deg, $accentSoft 0%, $bgCard 28%);
+  border: 1px solid $border;
+  border-left: 3px solid $accent;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: $shadowCard;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: $shadowMd;
+    border-color: $borderFocus;
+  }
+
+  .scoreLabel {
+    font-size: 0.8125rem;
+    color: $textMuted;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .scoreValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $accent;
+    flex-shrink: 0;
+  }
+}
+
+.summaryCard {
+  min-width: 0;
+  background: $bgCard;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.65rem;
+  box-shadow: $shadowCard;
+  border-left: 3px solid $accent;
+
+  &:hover {
+    box-shadow: $shadowMd;
+  }
+
+  .summaryLabel {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $textMuted;
+    margin-bottom: 0.4rem;
+  }
+
+  .summaryText {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: $text;
+    margin: 0;
+    white-space: pre-wrap;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .empty {
+    font-style: italic;
+    color: $textMuted;
+  }
+}
+
+.loading,
+.error,
+.emptyState {
+  text-align: center;
+  color: $textMuted;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.error {
+  color: $accent;
+}

@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly REACT_APP_API_URL: string;
   readonly REACT_APP_API_URL_V2: string;
+  readonly REACT_APP_SUPPORT_API_URL?: string;
 }
 
 interface ImportMeta {

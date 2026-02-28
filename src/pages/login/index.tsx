@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import buildUrl from "build-url-ts";
 
-import { AUTH_LOGIN_SUCCESS_EVENT } from "../../constants/auth";
-import AuthService from "../../services/auth.service";
+import { fetchOAuthToken } from "../../redux/actions/user";
 import styles from "./style.module.scss";
 
 const env = (import.meta as unknown as { env?: Record<string, string> }).env;
@@ -13,12 +12,6 @@ const API_URL_V2 = env?.REACT_APP_API_URL_V2 ?? "";
 export default function LoginPage() {
   return (
     <div className={styles.content}>
-      {/* <div className={styles.left}>
-        <div className={styles.inner}>
-          <img src="/images/paperflite.jpg" alt="Logo" className={styles.logo} />
-          <h1 className={styles.heading}>Paperflite Support Chat</h1>
-        </div>
-      </div> */}
       <div className={styles.right}>
         <SignInForm />
       </div>
@@ -27,44 +20,39 @@ export default function LoginPage() {
 }
 
 function SignInForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [fetchingToken, setFetchingToken] = useState(false);
+  const { authenticating, authenticated, error } = useSelector((state: { user?: { authentication?: { authenticating?: boolean; authenticated?: boolean; error?: string | null } } }) => state.user?.authentication ?? {});
   const listenerRef = useRef<(e: MessageEvent) => void>(() => {});
 
   const handleAuthenticateEvent = useCallback(
-    async (e: MessageEvent) => {
+    (e: MessageEvent) => {
       if (e.data?.type !== "COGNITO_AUTHORIZATION_SUCCESS") return;
 
       window.removeEventListener("message", listenerRef.current);
 
-      const { code, state, error } = e.data.payload || {};
+      const { code, state, error: payloadError } = e.data.payload || {};
 
-      if (error) {
-        setFetchingToken(false);
+      if (payloadError) {
         return;
       }
 
-      setFetchingToken(true);
-      try {
-        const response = await axios.get(
-          `${API_URL_V2}/admin/auth/3.0/oauth/token`,
-          { params: { code, state } }
-        );
-        if (response.status === 200) {
-          const { access_token, refresh_token } = response.data;
-          AuthService.saveToken(access_token, refresh_token);
-          window.dispatchEvent(new CustomEvent(AUTH_LOGIN_SUCCESS_EVENT));
-          navigate("/");
-        }
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        navigate(`/login?error=${encodeURIComponent(message)}`);
-      } finally {
-        setFetchingToken(false);
-      }
+      dispatch(fetchOAuthToken({ code, state }));
     },
-    [navigate]
+    [dispatch]
   );
+
+  useEffect(() => {
+    if (authenticated) {
+      navigate("/");
+    }
+  }, [authenticated, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      navigate(`/login?error=${encodeURIComponent(error)}`);
+    }
+  }, [error, navigate]);
 
   const stableListener = useCallback((e: MessageEvent) => {
     handleAuthenticateEvent(e);
@@ -101,19 +89,20 @@ function SignInForm() {
   }, [stableListener]);
 
   return (
-    <div className={styles.form}>
-      <h2 className={styles.header}>
-        Sign in to Paperflite Support Chat!
-      </h2>
-      <form className={styles.formInner} onSubmit={handleAuthenticate}>
-        <button
-          type="submit"
-          className={styles.btnAwsLogin}
-          disabled={fetchingToken}
-        >
-          {fetchingToken ? "Signing in…" : "Sign in with AWS Cognito"}
-        </button>
-      </form>
+    <div className={styles.formCard}>
+      <div className={styles.form}>
+        <img src="/images/paperflite.svg" alt="Paperflite" className={styles.logo} width={72} height={72} />
+        <h1 className={styles.header}>Sign in to Paperflite Support Chat</h1>
+        <form className={styles.formInner} onSubmit={handleAuthenticate}>
+          <button
+            type="submit"
+            className={styles.btnAwsLogin}
+            disabled={authenticating}
+          >
+            {authenticating ? "Signing in…" : "Sign in with AWS Cognito"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

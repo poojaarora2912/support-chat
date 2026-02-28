@@ -16,7 +16,6 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       window.close()
     }
     if (message.type === 'ACTIVATED_TAB' && message.payload) {
-      console.log('ACTIVATED_TAB', message.payload)
       store.dispatch(selectActivatedTab(message.payload))
     }
   })
