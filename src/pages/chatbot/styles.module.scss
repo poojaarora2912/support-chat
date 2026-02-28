@@ -7,6 +7,44 @@
   background-color: #fafafa;
   color: #060606;
 
+  .promptsWrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+
+    transform: translateY(calc(-50vh + 40rem));
+    transition: transform 1s ease;
+
+    & .promptsContainer {
+      padding: 1rem 0rem;
+    }
+
+    & .promptList {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    & .promptButton {
+        background: none;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        color: #717274;
+        font-size: 0.75rem;
+        position: relative;
+        left: 0;
+        transition: color .2s ease, left .2s ease;
+
+        &:hover {
+          cursor: pointer;
+          color: #060606;
+          left: 0.25rem;
+          transition: color .2s ease, left .2s ease;
+        }
+    }
+  }
+
   .chatSessionContainer {
     flex: 0 1 auto;
     max-height: 0;
@@ -22,7 +60,20 @@
   }
 
 
+  &.showPrompts {
+    .promptsWrapper {
+      flex: 1 1 0;
+      min-height: 0;
+    }
+  }
+
   &.inputAtBottom {
+    .promptsWrapper {
+      flex: 0 0 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
     .chatSessionContainer {
       flex: 1 1 0;
       min-height: 0;
