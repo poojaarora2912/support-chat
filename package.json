@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.0",
+    "react-lines-ellipsis": "^0.16.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.33",
@@ -23,6 +28,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "sass": "^1.97.3",
+    "sass-embedded": "^1.97.3",
     "vite": "^7.3.1"
   }
 }
