@@ -1,5 +1,21 @@
+:root,
+html,
+body,
+#root,
+#root * {
+  font-family: "Gill Sans", sans-serif !important;
+}
+
+/* Restore Font Awesome icon font (overridden by #root * above) */
+#root .fa,
+#root [class*="fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif !important;
+}
+#root .fa-solid {
+  font-weight: 900;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -24,10 +40,11 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* display: flex; */
+  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
+  background-color: #FFFFFF;
 }
 
 h1 {
