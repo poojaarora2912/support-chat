@@ -1,6 +1,8 @@
 .chatContainer {
 
   & .chatSessionItem {
+    margin-bottom: 2rem;
+    
     & .query {
       display: flex;
       align-items: center;
@@ -55,6 +57,86 @@
         line-height: 1.5rem;
         margin-bottom: 1.5rem;
         margin-top: 1rem;
+      }
+
+      & .citationGroup {
+        margin-top: 1rem;
+      }
+
+      & .sourceType {
+        color: #717274;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+      }
+
+      & .citation {
+        margin-bottom: 1.5rem;
+      }
+
+      & .citationText {
+        color: #060606;
+        font-size: 0.875rem;
+      }
+
+      & .supportArticle {
+        margin-bottom: 1rem;
+        background-color: #f2f2f2;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        display: flex;
+        width: fit-content;
+        // width: 50%;
+
+        & .supportArticleLink {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.5rem;
+
+
+        & .supportArticleTitle {
+            color: #060606;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5rem;
+            padding-left: 0;
+
+            transition: color 0.2s ease, padding-left 0.2s ease;
+          }
+  
+  
+          & .linkIcon {
+              color: #717274;
+              font-size: 0.75rem;
+              padding-left: 0;
+              transition: color 0.2s ease, padding-left 0.2s ease;
+          }
+        }
+      }
+
+      & .supportArticle:hover {
+        // background-color: #dbdbdb;
+        cursor: pointer;
+        // transition: background-color 0.2s ease;
+
+        & .supportArticleTitle {
+          color: #E51058;
+          padding-left: 0.25rem;
+          transition: color 0.2s ease, padding-left 0.2s ease;
+        }
+
+        & .linkIcon {
+          color: #E51058;
+          padding-left: 0.25rem;
+          transition: color 0.2s ease, padding-left 0.2s ease;
+        }
+
+        & .supportArticleLink:hover {
+          color: #E51058;
+          padding-left: 0.25rem;
+          transition: color 0.2s ease, padding-left 0.2s ease;
+        }
       }
     }
   }

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { selectChatSessionItems } from "../../redux/selectors/chatResponse";
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
+import cx from "classnames";
 
 const LOADING_PLACEHOLDER_MESSAGES = [
   "Engineering is working behind the scenes to support you...",
@@ -60,7 +61,31 @@ const ChatSessionItem = ({ item }) => {
             {item.answer?.coaching_guidance || "No answer"}
           </div>
         )}
+        {(() => {
+          const citations = item.answer?.citations ?? [];
+          const sourceTypes = [...new Set(citations.map((c) => c.source_type ?? "Other"))];
+          if (sourceTypes.length === 0) return null;
+          return (
+            <div className={styles.sourceType}>
+              Sources: {sourceTypes.join(", ")}
+            </div>
+          );
+        })()}
+        {item.support_articles?.map((article, index) => (
+          <SupportArticles key={article.id ?? index} article={article} />
+        ))}
       </div>
     </div>
+  );
+};
+
+const SupportArticles = ({ article }) => {
+  return (
+    <div className={styles.supportArticle}>
+    <a href={article.url} target="_blank" rel="noopener noreferrer" className={styles.supportArticleLink}>
+      <span className={styles.supportArticleTitle}>{article.title}</span>
+    <i className={cx("fa-solid fa-arrow-up-right-from-square", styles.linkIcon)} />
+    </a>
+  </div>
   );
 };

@@ -1,6 +1,6 @@
 /* global chrome */
 
-const ALLOWED_ORIGINS = ["https://app.intercom.com", "https://admin-paperflite", "https://adminservice.api.paperflite.com", "http://localhost:5173/"];
+const ALLOWED_ORIGINS = ["https://app.intercom.com", "https://admin-paperflite", "https://adminservice.api.paperflite.com", "http://localhost:5173/", "https://support.paperflite.com"];
 
 function isIntercomTab(url) {
   if (!url || !url.startsWith("http")) return false;
