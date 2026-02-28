@@ -1,13 +1,16 @@
-import { combineReducers } from "redux";
 
+import { combineReducers } from "redux";
 import { LOGOUT_USER } from "../../constants/actionTypes";
 
 import AuthService from "../../services/auth.service";
 import userReducer from "./userReducer";
+import selectionReducer from "./selectionReducer";
+
 
 
 const appReducer = combineReducers({
     user: userReducer,
+    selection: selectionReducer,
 });
 
 export const rootReducer = (state, action) => {

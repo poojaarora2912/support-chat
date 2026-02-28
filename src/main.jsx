@@ -5,11 +5,16 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App.jsx'
 import store from './redux/store'
+import { selectActivatedTab } from './redux/actions/selection'
 
 if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === 'CLOSE_PANEL') {
       window.close()
+    }
+    if (message.type === 'ACTIVATED_TAB' && message.payload) {
+      console.log('ACTIVATED_TAB', message.payload)
+      store.dispatch(selectActivatedTab(message.payload))
     }
   })
 }
