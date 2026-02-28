@@ -6,11 +6,13 @@ import AuthService from "../../services/auth.service";
 import userReducer from "./userReducer";
 import selectionReducer from "./selectionReducer";
 import evaluationReducer from "./evaluationReducer";
+import chatResponseReducer from "./chatResponseReducer";
 
 const appReducer = combineReducers({
     user: userReducer,
     selection: selectionReducer,
     evaluation: evaluationReducer,
+    chatResponse: chatResponseReducer,
 });
 
 export const rootReducer = (state, action) => {

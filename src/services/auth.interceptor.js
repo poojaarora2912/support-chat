@@ -22,7 +22,7 @@ const isAuthenticatedRequest = (url) => {
     url.startsWith(apiUrlV2) ||
     (supportApiUrl && url.startsWith(supportApiUrl))
   );
-};
+}
 
 export default function() {
     axios.interceptors.request.use(function(config) {
@@ -31,7 +31,7 @@ export default function() {
           config.headers.Authorization = "Bearer " + AuthService.getAccessToken();
         }
       }
-  
+
       return config;
     });
   
@@ -41,66 +41,69 @@ export default function() {
         return response;
       },
       (error) => {
-        const {
-          config,
-          response: { status },
-        } = error;
-        const originalRequest = config;
-  
-        if (status === 401) {
-          if (
-            config.url.endsWith("oauth/token") ||
-            config.url.endsWith("oauth/token/refresh") ||
-            config.url.endsWith("logout")
-          ) {
+        try {
+          const config = error?.config;
+          const status = error?.response?.status;
+          const originalRequest = config;
+
+          if (!config) {
             return Promise.reject(error);
           }
-  
-          if (!isAlreadyFetchingAccessToken) {
-            isAlreadyFetchingAccessToken = true;
-            var refreshTokenValue = AuthService.getRefreshToken();
-  
-            refreshOAuthToken(refreshTokenValue)
-              .then((token) => {
-                isAlreadyFetchingAccessToken = false;
-  
-                if (token && token.data && token.data.access_token) {
-                  AuthService.saveAccessToken(token.data.access_token);
-                  onAccessTokenFetched(token.data.access_token);
-                }
-              })
-              .catch((err) => {
-                isAlreadyFetchingAccessToken = false;
-                subscribers = [];
-  
-                window.location = "/login";
-                return Promise.reject("Auth error");
+
+          if (status === 401) {
+            if (
+              (config.url && (
+                config.url.endsWith("oauth/token") ||
+                config.url.endsWith("oauth/token/refresh") ||
+                config.url.endsWith("logout")
+              ))
+            ) {
+              return Promise.reject(error);
+            }
+
+            if (!isAlreadyFetchingAccessToken) {
+              isAlreadyFetchingAccessToken = true;
+              var refreshTokenValue = AuthService.getRefreshToken();
+
+              refreshOAuthToken(refreshTokenValue)
+                .then((token) => {
+                  isAlreadyFetchingAccessToken = false;
+
+                  if (token && token.data && token.data.access_token) {
+                    AuthService.saveAccessToken(token.data.access_token);
+                    onAccessTokenFetched(token.data.access_token);
+                  }
+                })
+                .catch((err) => {
+                  isAlreadyFetchingAccessToken = false;
+                  subscribers = [];
+
+                  window.location = "/login";
+                  return Promise.reject("Auth error");
+                });
+            }
+
+            const retryOriginalRequest = new Promise((resolve) => {
+              addSubscriber((access_token) => {
+                originalRequest.headers.Authorization = "Bearer " + access_token;
+                resolve(axios(originalRequest));
               });
-          }
-  
-          const retryOriginalRequest = new Promise((resolve) => {
-            addSubscriber((access_token) => {
-              originalRequest.headers.Authorization = "Bearer " + access_token;
-              resolve(axios(originalRequest));
             });
-          });
-  
-          return retryOriginalRequest;
-        }
-  
-        console.log("Unknown error :" + error);
-  
-        let errorMessage = "";
-  
-        if (error.response && error.response.data) {
-          return Promise.reject(error.response.data);
-        } else {
+
+            return retryOriginalRequest;
+          }
+
+          if (error.response && error.response.data) {
+            return Promise.reject(error.response.data);
+          }
           return Promise.reject({
             code: UNKNOWN_ERROR,
             message: "Oops, Unable to complete the request",
           });
+        } catch (interceptorError) {
+          console.error("Auth interceptor error:", interceptorError);
+          return Promise.reject(error);
         }
-        
       }
     );
   }

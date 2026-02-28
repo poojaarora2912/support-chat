@@ -1,8 +1,11 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styles from './AppLayout.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import cx from 'classnames';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+import { invalidateChatResponse } from '../redux/actions/chatResponse';
 import { LOGOUT_USER } from '../constants/actionTypes';
 
 export default function AppLayout() {
@@ -12,22 +15,14 @@ export default function AppLayout() {
 
   const activatedTab = useSelector((state) => state.selection.activatedTab) || null;
   const isEvaluationPage = location.pathname === '/evaluation';
-  
+
   const [showEvaluate, setShowEvaluate] = useState(false);
   const [currentTab, setCurrentTab] = useState('');
+  const [newChat, setNewChat] = useState(false);
 
-  const isIntercomConversation = (url)  => {
+  const isIntercomConversation = (url) => {
     return url.includes('https://app.intercom.com/a/inbox/') && url.includes('conversation/');
-  }
-
-  const handleLogout = () => {
-    dispatch({type: LOGOUT_USER});
-    navigate('/login');
-  }
-
-  const handleEvaluate = () => {
-    navigate('/evaluation');
-  }
+  };
 
   useEffect(() => {
     if (!activatedTab?.url || activatedTab.url === currentTab) return;
@@ -35,21 +30,50 @@ export default function AppLayout() {
     setShowEvaluate(isIntercomConversation(activatedTab.url));
   }, [activatedTab, currentTab]);
 
+  const handleLogout = () => {
+    dispatch({ type: LOGOUT_USER });
+    navigate('/login');
+  };
+
+  const handleEvaluate = () => {
+    navigate('/evaluation');
+  };
+
+  const handleNewChat = () => {
+    setNewChat(false);
+    dispatch(invalidateChatResponse());
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        Paperflite Support Chatbot
-
-        <div className={styles.logoutButton} onClick={handleLogout}><i className="fa-solid fa-right-from-bracket" /> </div>
+        <span className={styles.headerTitle}>Paperflite Support Chatbot</span>
+        <div className={styles.headerActions}>
+          <div className={styles.actionButtons}>
+            {newChat && (
+              <div className={styles.actionButton} onClick={() => handleNewChat()}>
+                <i className={cx(styles.actionButtonIcon, 'fa-solid fa-plus')} />
+                New Chat
+              </div>
+            )}
+          </div>
+          <div className={styles.logoutButton} onClick={handleLogout}>
+            <OverlayTrigger placement="bottom" overlay={<Tooltip id="logout-tooltip">Logout</Tooltip>}>
+              <span>
+                <i className="fa-solid fa-right-from-bracket" />
+              </span>
+            </OverlayTrigger>
+          </div>
+        </div>
       </div>
       {showEvaluate && !isEvaluationPage && (
         <div className={styles.evaluationContainer} onClick={handleEvaluate}>
-          Evaluate your chat <i className="fa-solid fa-arrow-right" />
+          Evaluate your chat <i className={cx(styles.evaluationArrow, 'fa-solid fa-arrow-right')} />
         </div>
       )}
-    <div className={styles.content}>
-      <Outlet />
+      <div className={styles.content}>
+        <Outlet context={{ newChat, setNewChat }} />
+      </div>
     </div>
-  </div>
-);
+  );
 }

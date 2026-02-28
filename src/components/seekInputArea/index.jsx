@@ -2,23 +2,30 @@ import React, { useRef, useState } from "react";
 import cx from "classnames";
 import styles from './styles.module.scss';
 import { Button, FormControl, FormGroup, InputGroup } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchChatResponse } from "../../redux/actions/chatResponse";
 
-export default function SeekInputArea(props) {
+export default function SeekInputArea({ onFormSubmit, sessionId }) {
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState("");
+
+  const chatResponse = useSelector((state) => state.chatResponse);
+  console.log('chatResponse', chatResponse)
 
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (value.trim()) {
-      props.onFormSubmit?.();
+      onFormSubmit?.();
+      dispatch(fetchChatResponse({ message: value, sessionId: sessionId }));
       setValue("");
     }
   };
 
   return (
     <div
-      className={cx(styles.seekInputArea, props.className, {
+      className={cx(styles.seekInputArea, {
         // [styles.disableSearchBar]: props.disabled,
       })}
     >
@@ -44,18 +51,6 @@ export default function SeekInputArea(props) {
                 }
               }}
             />
-            {/* {!props.placeholder && (
-              <div
-                className={styles.placeholder}
-                onClick={() => {
-                  if (!props.disabled) {
-                    inputRef.current.focus();
-                  }
-                }}
-              >
-             
-              </div>
-            )} */}
             <Button
               type="submit"
             >
