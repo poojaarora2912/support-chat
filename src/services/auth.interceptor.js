@@ -12,14 +12,18 @@ const apiUrlV2 = import.meta.env.REACT_APP_API_URL_V2;
 
 const OAUTH_URL = `${apiUrlV2}/admin/auth/3.0/oauth/token`;
 
+const CHAT_URL = `https://support.svc.paperflite.dev/api/v1`;
+
 export default function() {
     axios.interceptors.request.use(function(config) {
       if (AuthService.isAuthenticated()) {
-        if ((config.url.startsWith(apiUrl) || config.url.startsWith(apiUrlV2)) && !config.url.startsWith(OAUTH_URL)) {
+        const isApiRequest = (config.url.startsWith(apiUrl) || config.url.startsWith(apiUrlV2)) && !config.url.startsWith(OAUTH_URL);
+        const isChatRequest = config.url.startsWith(CHAT_URL);
+        if (isApiRequest || isChatRequest) {
           config.headers.Authorization = "Bearer " + AuthService.getAccessToken();
         }
       }
-  
+
       return config;
     });
   

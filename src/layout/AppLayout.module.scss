@@ -20,10 +20,81 @@
   align-items: center;
   justify-content: space-between;
 
-  h1 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+  & .headerTitle {
+    color: #060606;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  & .headerActions {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    & .actionButtons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+
+      & .actionButton {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.2rem;
+
+        color: #060606;
+        font-size: 0.75rem;
+        // font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      & .actionButtonIcon {
+        color: #E51058;
+        font-size: 0.75rem;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      & .actionButton:hover {
+        cursor: pointer;
+        color: #E51058;
+        left: 0.25rem;
+        transition: color 0.2s ease, left 0.2s ease;
+      }
+    }
+
+    & .logoutButton {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: normal;
+      
+
+      &:hover {
+        cursor: pointer;
+        color: #E51058;
+        left: 0.25rem;
+        transition: color 0.2s ease, left 0.2s ease;
+      }
+
+      & .logoutButtonIcon {
+        color: #E51058;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
   }
 }
 
@@ -33,6 +104,7 @@
   color: #060606;
   font-size: 1rem;
   font-weight: 500;
+  font-style: italic;
 
   display: flex;
   flex-direction: row;
@@ -43,6 +115,13 @@
 
   left: 0;
   transition: color 0.2s ease, left 0.2s ease;
+
+  & .evaluationArrow {
+    color: #E51058;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: normal;
+  }
 
   &:hover {
     cursor: pointer;
@@ -57,4 +136,21 @@
   display: flex;
   flex-direction: column;
   padding: 0 1rem 1rem;
+}
+
+
+:global(.tooltip) {
+  z-index: 9999 !important;
+}
+
+:global(.tooltip-inner) {
+    background: rgba(255, 255, 255, 1);
+    color: #060606;
+    font-size: 0.75rem;
+    font-family: 'Gilroy', sans-serif;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 8px;
+    
+    box-shadow: 0px 0px 20px 0px rgba(18, 18, 18, 0.05);
 }

@@ -1,17 +1,38 @@
 .supportChatbotContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 8rem);
+  align-items: stretch;
+  justify-content: flex-end;
+  height: calc(100vh - 4rem);
   background-color: #fafafa;
   color: #060606;
 
-  > * {
-    transition: transform 0.6s ease;
+  .chatSessionContainer {
+    flex: 0 1 auto;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease;
   }
 
-  &.inputAtBottom > * {
-    transform: translateY(calc(50vh - 10rem));
+  .inputContainer {
+    flex-shrink: 0;
+    width: 100%;
+    transform: translateY(calc(-50vh + 2rem));
+    transition: transform 1s ease;
+  }
+
+
+  &.inputAtBottom {
+    .chatSessionContainer {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .inputContainer {
+      transform: translateY(0);
+    }
   }
 }

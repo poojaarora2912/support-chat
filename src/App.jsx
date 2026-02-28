@@ -27,7 +27,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<SupportChatbot />} />
+          {/* <Route index element={<SupportChatbot />} /> */}
         </Route>
         {/* Catch-all: redirect to login so login page is shown first */}
         <Route path="*" element={<Navigate to="/login" replace />} />
