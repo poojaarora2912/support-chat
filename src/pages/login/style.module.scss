@@ -1,5 +1,5 @@
 // Keep existing colors; match evaluation page patterns (shadows, radius, typography)
-$text: #1a1a2e;
+$text: #060606;
 $textMuted: #5c5c5c;
 
 .content {
@@ -14,7 +14,7 @@ $textMuted: #5c5c5c;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: #f8f9fa;
+  background: #FAFAFA;
 }
 
 .formCard {
@@ -23,7 +23,7 @@ $textMuted: #5c5c5c;
   background: #ffffff;
   border-radius: 12px;
   padding: 2rem 2.25rem;
-  border: 1px solid #e8e6e3;
+  border: none;
   transition: box-shadow 0.2s ease;
 }
 
@@ -34,13 +34,13 @@ $textMuted: #5c5c5c;
 .logo {
   display: block;
   margin: 0 auto 1.5rem;
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
 }
 
 .header {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 500;
   color: $text;
   margin: 0 0 0.35rem;
   letter-spacing: -0.02em;
@@ -67,7 +67,7 @@ $textMuted: #5c5c5c;
   width: 100%;
   padding: 0.875rem 1.25rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
   background: #E51058;
   border: none;

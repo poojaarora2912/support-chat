@@ -6,6 +6,7 @@ import { selectChatSessionItems, selectCurrentSessionId } from '../../redux/sele
 import styles from './styles.module.scss'
 import cx from 'classnames';
 import { useOutletContext } from 'react-router-dom';
+import _ from 'lodash';
 
 const PROMPTS = [
   "What happens when 'Seek Not Available' appears on assets?",
@@ -14,18 +15,26 @@ const PROMPTS = [
 ]
 
 function SupportChatbot() {
-  const { newChat, setNewChat } = useOutletContext();
+  const { newChat, setNewChat, showEvaluate } = useOutletContext();
   const [inputAtBottom, setInputAtBottom] = useState(newChat)
   const [promptMessage, setPromptMessage] = useState(null)
   const chatScrollRef = useRef(null)
   const chatSessionItems = useSelector(selectChatSessionItems)
   const sessionId = useSelector(selectCurrentSessionId) || crypto.randomUUID();
 
+  const lastItem = chatSessionItems?.length > 0 ? chatSessionItems[chatSessionItems.length - 1] : null
+  const lastItemAnswerLoaded = lastItem && !lastItem._pending && lastItem.answer?.coaching_guidance
+
   useEffect(() => {
-    if (chatScrollRef.current && chatSessionItems?.length > 0) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight
+    if (!chatScrollRef.current || !chatSessionItems?.length) return
+    const el = chatScrollRef.current
+    const scrollToBottom = () => {
+      el.scrollTop = el.scrollHeight
     }
-  }, [chatSessionItems?.length])
+    requestAnimationFrame(() => {
+      requestAnimationFrame(scrollToBottom)
+    })
+  }, [chatSessionItems?.length, lastItemAnswerLoaded])
 
   useEffect(() => {
     if (!newChat && inputAtBottom) {
@@ -36,7 +45,10 @@ function SupportChatbot() {
   }, [newChat, inputAtBottom])
 
   return (
-    <div className={cx(styles.supportChatbotContainer, inputAtBottom && styles.inputAtBottom, chatSessionItems?.length === 0 && styles.showPrompts)}>
+    <div className={cx(styles.supportChatbotContainer, 
+    inputAtBottom && styles.inputAtBottom, 
+    showEvaluate && _.size(chatSessionItems) > 0 && styles.showEvaluate,
+    chatSessionItems?.length === 0 && styles.showPrompts)}>
       <div className={styles.promptsWrapper}>
         {chatSessionItems?.length === 0 && (
           <div className={styles.promptsContainer}>
@@ -47,8 +59,6 @@ function SupportChatbot() {
                   className={styles.promptButton}
                   onClick={() => {
                     setPromptMessage(prompt)
-                    setNewChat(true)
-                    // onFormSubmit()
                   }}
                 >
                   / {prompt}
@@ -62,7 +72,7 @@ function SupportChatbot() {
         {chatSessionItems?.length > 0 && <ChatContainer />}
       </div>
       
-      <div className={styles.inputContainer}>
+      <div className={cx(styles.inputContainer, showEvaluate && styles.adjustedInputContainer)}>
         <SeekInputArea
           onFormSubmit={() => {
             setInputAtBottom(true)
