@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import buildUrl from "build-url-ts";
 
 import { fetchOAuthToken } from "../../redux/actions/user";
-import styles from "./style.module.scss";
+
+import styles from "./styles.module.scss";
 
 const env = (import.meta as unknown as { env?: Record<string, string> }).env;
 const API_URL_V2 = env?.REACT_APP_API_URL_V2 ?? "";

@@ -1,18 +1,20 @@
-import { useState, useRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import SeekInputArea from '../../components/seekInputArea'
-import ChatContainer from '../../components/chatContainer'
-import { selectChatSessionItems, selectCurrentSessionId } from '../../redux/selectors/chatResponse'
-import styles from './styles.module.scss'
-import cx from 'classnames';
+import { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
+
+import SeekInputArea from '../../components/seekInputArea';
+import ChatContainer from '../../components/chatContainer';
+import { selectChatSessionItems, selectCurrentSessionId } from '../../redux/selectors/chatResponse';
+
+import styles from './styles.module.scss';
+import cx from 'classnames';
 import _ from 'lodash';
 
 const PROMPTS = [
   "What happens when 'Seek Not Available' appears on assets?",
   "What happens when auto-sync is not working for data sources?",
   "What should I do to add custom fonts to collections?"
-]
+];
 
 function SupportChatbot() {
   const { newChat, setNewChat, showEvaluate } = useOutletContext();

@@ -85,21 +85,12 @@
     .inputContainer {
       transform: translateY(-2rem);
     }
-
-    // .adjustedInputContainer {
-    //   transform: translateY(0rem);
-    // }
   }
 }
 
 .showEvaluate {
     height: calc(100vh - 10rem);
-    // .promptsWrapper {
-    //   transform: translateY(calc(-50vh + 30rem));
-    // }
-    .chatSessionContainer {
-    //   transform: translateY(calc(-50vh + 6rem));
-    }
+
     .inputContainer {
       transform: translateY(0rem);
     }

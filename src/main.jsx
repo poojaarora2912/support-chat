@@ -1,12 +1,14 @@
 /* global chrome */
-import { StrictMode, Component } from 'react'
-import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
-import './index.css'
-import App from './App.jsx'
-import store from './redux/store'
-import { selectActivatedTab } from './redux/actions/selection'
-import setupAuthInterceptor from './services/auth.interceptor'
+import { StrictMode, Component } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+
+import { selectActivatedTab } from './redux/actions/selection';
+import setupAuthInterceptor from './services/auth.interceptor';
+import App from './App.jsx';
+import store from './redux/store';
+
+import './index.css';
 
 setupAuthInterceptor()
 
@@ -30,9 +32,11 @@ class ErrorBoundary extends Component {
   static getDerivedStateFromError(error) {
     return { hasError: true, error }
   }
+
   componentDidCatch(error, info) {
     console.error('App error:', error, info)
   }
+
   render() {
     if (this.state.hasError) {
       return (

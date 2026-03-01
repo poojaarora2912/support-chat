@@ -30,7 +30,6 @@ function App() {
         >
           <Route index element={<SupportChatbot />} />
           <Route path="/evaluation" element={<Evaluation />} />
-          {/* <Route index element={<SupportChatbot />} /> */}
         </Route>
         {/* Catch-all: redirect to login so login page is shown first */}
         <Route path="*" element={<Navigate to="/login" replace />} />
