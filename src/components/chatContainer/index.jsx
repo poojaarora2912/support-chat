@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { selectChatSessionItems } from "../../redux/selectors/chatResponse";
 
+import _ from "lodash";
 import styles from "./styles.module.scss";
 import cx from "classnames";
 
@@ -75,11 +76,13 @@ const ChatSessionItem = ({ item }) => {
           );
         })()}
         <div className={styles.supportArticles}>
-        <div className={styles.helpText}>Related articles that may help you:</div>
-          {item.support_articles?.map((article, index) => (
+        {_.size(item.support_articles) > 0 && (
+            <div className={styles.helpText}>Related articles that may help you:</div>
+          )}    
+          {_.size(item.support_articles) > 0 && item.support_articles.map((article, index) => (
             <SupportArticles key={article.id ?? index} article={article} />
           ))}
-        </div>
+          </div>
       </div>
     </div>
   );
