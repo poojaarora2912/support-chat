@@ -99,7 +99,7 @@ function SignInForm() {
             className={styles.btnAwsLogin}
             disabled={authenticating}
           >
-            {authenticating ? "Signing in…" : "Sign in with AWS Cognito"}
+            {authenticating ? "Signing in…" : "Sign in"}
           </button>
         </form>
       </div>

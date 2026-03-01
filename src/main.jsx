@@ -19,13 +19,12 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       store.dispatch(selectActivatedTab(message.payload))
     }
   })
+  // Panel may have opened before ACTIVATED_TAB was received; request current tab so selection reducer is set
+  chrome.runtime.sendMessage({ type: 'GET_ACTIVATED_TAB' }, (response) => {
+    if (response?.payload) store.dispatch(selectActivatedTab(response.payload))
+  })
 }
 
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
 class ErrorBoundary extends Component {
   state = { hasError: false, error: null }
   static getDerivedStateFromError(error) {

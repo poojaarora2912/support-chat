@@ -32,12 +32,18 @@ function captureTabUrl(tabId, url) {
   chrome.storage.session.set({ [tabId]: details }).catch((err) => console.error(err));
 }
 
-function notifyPanelActivatedTab(tabId, url) {
+function buildActivatedTabPayload(tabId, url) {
   const details = getUrlDetails(url);
-  if (!details) return;
+  if (!details) return null;
+  return { tabId, url, ...details };
+}
+
+function notifyPanelActivatedTab(tabId, url) {
+  const payload = buildActivatedTabPayload(tabId, url);
+  if (!payload) return;
   chrome.runtime.sendMessage({
     type: "ACTIVATED_TAB",
-    payload: { tabId, url, ...details },
+    payload,
   }).catch(() => {});
 }
 
@@ -57,6 +63,22 @@ function updatePanelForTab(tabId, url) {
     });
   }
 }
+
+// When panel opens, it can request the current tab (in case ACTIVATED_TAB was sent before panel was ready)
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type !== "GET_ACTIVATED_TAB") return false;
+  chrome.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
+    if (tab?.url) {
+      const payload = buildActivatedTabPayload(tab.id, tab.url);
+      if (payload) {
+        sendResponse({ payload });
+        return;
+      }
+    }
+    sendResponse({});
+  }).catch(() => sendResponse({}));
+  return true; // keep channel open for async sendResponse
+});
 
 // Open panel on click — only works if panel is enabled for that tab
 chrome.sidePanel
