@@ -79,8 +79,20 @@
         font-size: 0.875rem;
       }
 
+      & .supportArticles {
+        margin: 1.5rem 0rem;
+      }
+
+      & .helpText {
+        color: #717274;
+        font-style: italic;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
       & .supportArticle {
-        margin-bottom: 1rem;
+        margin: 1rem 0rem;
         background-color: #f2f2f2;
         padding: 0.5rem;
         border-radius: 1rem;
@@ -115,9 +127,7 @@
       }
 
       & .supportArticle:hover {
-        // background-color: #dbdbdb;
         cursor: pointer;
-        // transition: background-color 0.2s ease;
 
         & .supportArticleTitle {
           color: #E51058;

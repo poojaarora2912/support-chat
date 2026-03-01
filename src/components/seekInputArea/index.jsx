@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button, FormControl, FormGroup, InputGroup } from "react-bootstrap";
+
+import { fetchChatResponse } from "../../redux/actions/chatResponse";
 import cx from "classnames";
 import styles from './styles.module.scss';
-import { Button, FormControl, FormGroup, InputGroup } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { fetchChatResponse } from "../../redux/actions/chatResponse";
 
 export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, setPromptMessage }) {
   const inputRef = useRef(null);

@@ -1,21 +1,23 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import styles from './AppLayout.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import cx from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { invalidateChatResponse } from '../redux/actions/chatResponse';
 import { LOGOUT_USER } from '../constants/actionTypes';
+
+import cx from 'classnames';
 import _ from 'lodash';
+import styles from './AppLayout.module.scss';
 
 export default function AppLayout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const activatedTab = useSelector((state) => state.selection.activatedTab) || null;
   const isEvaluationPage = location.pathname === '/evaluation';
+
+  const activatedTab = useSelector((state) => state.selection.activatedTab) || null;
 
   const [showEvaluate, setShowEvaluate] = useState(false);
   const [currentTab, setCurrentTab] = useState('');

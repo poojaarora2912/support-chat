@@ -1,6 +1,11 @@
 /* global chrome */
 
-const ALLOWED_ORIGINS = ["https://app.intercom.com", "https://admin-paperflite", "https://adminservice.api.paperflite.com", "http://localhost:5173/", "https://support.paperflite.com"];
+const ALLOWED_ORIGINS = [
+  "https://app.intercom.com", 
+  "https://admin-paperflite", 
+  "https://adminservice.api.paperflite.com", 
+  "http://localhost:5173/", 
+  "https://support.paperflite.com"];
 
 function isIntercomTab(url) {
   if (!url || !url.startsWith("http")) return false;
@@ -50,7 +55,6 @@ function notifyPanelActivatedTab(tabId, url) {
 // Enable or disable panel based on whether the tab is Intercom
 function updatePanelForTab(tabId, url) {
   const enabled = isIntercomTab(url);
-  // console.log('updatePanelForTab', tabId, url, enabled);
 
   chrome.sidePanel
     .setOptions({ tabId, enabled, path: "index.html" })

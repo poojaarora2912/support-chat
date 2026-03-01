@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
-import { selectChatSessionItems } from "../../redux/selectors/chatResponse";
-import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
+
+import { selectChatSessionItems } from "../../redux/selectors/chatResponse";
+
+import styles from "./styles.module.scss";
 import cx from "classnames";
 
 const LOADING_PLACEHOLDER_MESSAGES = [
@@ -14,6 +16,7 @@ const LOADING_PLACEHOLDER_MESSAGES = [
   "Turning questions into answers...",
   "Built with care, loading with purpose...",
 ];
+
 export default function ChatContainer() {
   const chatSessionItems = useSelector(selectChatSessionItems);
 
@@ -71,9 +74,12 @@ const ChatSessionItem = ({ item }) => {
             </div>
           );
         })()}
-        {item.support_articles?.map((article, index) => (
-          <SupportArticles key={article.id ?? index} article={article} />
-        ))}
+        <div className={styles.supportArticles}>
+        <div className={styles.helpText}>Related articles that may help you:</div>
+          {item.support_articles?.map((article, index) => (
+            <SupportArticles key={article.id ?? index} article={article} />
+          ))}
+        </div>
       </div>
     </div>
   );

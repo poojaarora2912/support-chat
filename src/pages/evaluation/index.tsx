@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import _ from 'lodash';
 
 import { RootState } from '../../redux/store';
 import { fetchEvaluation } from '../../redux/actions/evalutation';
 import type { Evaluation as EvaluationType } from '../../redux/reducers/evaluationReducer';
 
+import _ from 'lodash';
 import styles from './style.module.scss';
 
 const SCORE_LABELS: Record<keyof EvaluationType['scores'], string> = {

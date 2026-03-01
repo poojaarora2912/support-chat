@@ -1,13 +1,11 @@
 import axios from "axios";
-import buildUrl from "build-url-ts";
 import { createAction } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { FETCHING_CHAT_RESPONSE, FETCHING_CHAT_RESPONSE_SUCCEEDED, FETCHING_CHAT_RESPONSE_FAILED, INVALIDATE_CHAT_RESPONSE } from "../../constants/actionTypes";
 const env = (import.meta as unknown as { env: Record<string, string> }).env;
-const API_URL = env.REACT_APP_API_URL;
-const API_URL_V2 = env.REACT_APP_API_URL_V2;
+const SUPPORT_API_URL = env.REACT_APP_SUPPORT_API_URL;
 
-const CHAT_URL = `https://support.svc.paperflite.dev/api/v1/support_chat/chat`;
+const CHAT_URL = `${SUPPORT_API_URL}/api/v1/support_chat/chat`;
 
 export const fetchChatResponse = createAction(FETCHING_CHAT_RESPONSE);
 export const fetchingChatResponseSucceeded = createAction(FETCHING_CHAT_RESPONSE_SUCCEEDED);
