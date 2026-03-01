@@ -39,7 +39,9 @@ export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, 
               className={styles.inputField}
               placeholder={"What are you looking for?"}
               onChange={(e) => {
-               setValue(e.target.value);
+                const text = e.target.value;
+                setValue(text);
+                if (text === "" && promptMessage) setPromptMessage?.("");
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {

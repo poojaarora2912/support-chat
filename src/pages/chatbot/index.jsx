@@ -22,11 +22,19 @@ function SupportChatbot() {
   const chatSessionItems = useSelector(selectChatSessionItems)
   const sessionId = useSelector(selectCurrentSessionId) || crypto.randomUUID();
 
+  const lastItem = chatSessionItems?.length > 0 ? chatSessionItems[chatSessionItems.length - 1] : null
+  const lastItemAnswerLoaded = lastItem && !lastItem._pending && lastItem.answer?.coaching_guidance
+
   useEffect(() => {
-    if (chatScrollRef.current && chatSessionItems?.length > 0) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight
+    if (!chatScrollRef.current || !chatSessionItems?.length) return
+    const el = chatScrollRef.current
+    const scrollToBottom = () => {
+      el.scrollTop = el.scrollHeight
     }
-  }, [chatSessionItems?.length])
+    requestAnimationFrame(() => {
+      requestAnimationFrame(scrollToBottom)
+    })
+  }, [chatSessionItems?.length, lastItemAnswerLoaded])
 
   useEffect(() => {
     if (!newChat && inputAtBottom) {
@@ -51,7 +59,6 @@ function SupportChatbot() {
                   className={styles.promptButton}
                   onClick={() => {
                     setPromptMessage(prompt)
-                    setNewChat(true)
                   }}
                 >
                   / {prompt}

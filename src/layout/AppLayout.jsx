@@ -55,10 +55,10 @@ export default function AppLayout() {
         <span className={styles.headerTitle}>Paperflite Support Chatbot</span>
         <div className={styles.headerActions}>
           <div className={styles.actionButtons}>
-            {(newChat || showEvaluate) && (
+            {(newChat || isEvaluationPage) && (
               <div className={styles.actionButton} onClick={() => handleNewChat()}>
                 <i className={cx(styles.actionButtonIcon, 'fa-solid fa-plus')} />
-                New Chat
+                {isEvaluationPage ? 'Continue Chat' : 'New Chat'}
               </div>
             )}
           </div>
