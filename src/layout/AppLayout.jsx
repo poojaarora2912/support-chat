@@ -7,6 +7,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { invalidateChatResponse } from '../redux/actions/chatResponse';
 import { LOGOUT_USER } from '../constants/actionTypes';
+import _ from 'lodash';
 
 export default function AppLayout() {
   const dispatch = useDispatch();
@@ -40,8 +41,12 @@ export default function AppLayout() {
   };
 
   const handleNewChat = () => {
-    setNewChat(false);
-    dispatch(invalidateChatResponse());
+    if(_.get(location, "pathname") === '/evaluation') {
+      navigate('/');
+    } else {
+      setNewChat(false);
+      dispatch(invalidateChatResponse());
+    }
   };
 
   return (
@@ -50,7 +55,7 @@ export default function AppLayout() {
         <span className={styles.headerTitle}>Paperflite Support Chatbot</span>
         <div className={styles.headerActions}>
           <div className={styles.actionButtons}>
-            {newChat && (
+            {(newChat || showEvaluate) && (
               <div className={styles.actionButton} onClick={() => handleNewChat()}>
                 <i className={cx(styles.actionButtonIcon, 'fa-solid fa-plus')} />
                 New Chat
@@ -72,7 +77,7 @@ export default function AppLayout() {
         </div>
       )}
       <div className={styles.content}>
-        <Outlet context={{ newChat, setNewChat }} />
+        <Outlet context={{ newChat, setNewChat, showEvaluate }} />
       </div>
     </div>
   );

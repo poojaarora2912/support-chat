@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import cx from "classnames";
 import styles from './styles.module.scss';
 import { Button, FormControl, FormGroup, InputGroup } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchChatResponse } from "../../redux/actions/chatResponse";
 
 export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, setPromptMessage }) {
@@ -11,14 +11,11 @@ export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, 
 
   const [value, setValue] = useState("");
 
-  const chatResponse = useSelector((state) => state.chatResponse);
-
-  const handleSubmit = (e) => {
-    e?.preventDefault();
-    const messageToSend = (value).trim();
-    if (messageToSend) {
+  const handleSubmit = (messageToSend) => {
+    const message = (messageToSend).trim();
+    if (message) {
       onFormSubmit?.();
-      dispatch(fetchChatResponse({ message: messageToSend, sessionId: sessionId }));
+      dispatch(fetchChatResponse({ message: message, sessionId: sessionId }));
       setValue("");
       setPromptMessage?.("");
     }
@@ -36,7 +33,7 @@ export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, 
               as="textarea"
               style={{ resize: "none" }}
               type="text"
-              value={value}
+              value={value || promptMessage}
               ref={inputRef}
               disabled={false}
               className={styles.inputField}
@@ -47,12 +44,24 @@ export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, 
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSubmit();
+                  if(value){
+                    handleSubmit(value);
+                  } else {
+                    handleSubmit(promptMessage || '');
+                  }
                 }
               }}
             />
             <Button
               type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                if(value){
+                  handleSubmit(value);
+                } else {
+                  handleSubmit(promptMessage || '');
+                }
+              }}
             >
             <i className={cx("fa-solid fa-long-arrow-right", styles.seekSendIcon)} />
             </Button>

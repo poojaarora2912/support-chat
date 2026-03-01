@@ -6,6 +6,7 @@ import { selectChatSessionItems, selectCurrentSessionId } from '../../redux/sele
 import styles from './styles.module.scss'
 import cx from 'classnames';
 import { useOutletContext } from 'react-router-dom';
+import _ from 'lodash';
 
 const PROMPTS = [
   "What happens when 'Seek Not Available' appears on assets?",
@@ -14,7 +15,7 @@ const PROMPTS = [
 ]
 
 function SupportChatbot() {
-  const { newChat, setNewChat } = useOutletContext();
+  const { newChat, setNewChat, showEvaluate } = useOutletContext();
   const [inputAtBottom, setInputAtBottom] = useState(newChat)
   const [promptMessage, setPromptMessage] = useState(null)
   const chatScrollRef = useRef(null)
@@ -36,7 +37,10 @@ function SupportChatbot() {
   }, [newChat, inputAtBottom])
 
   return (
-    <div className={cx(styles.supportChatbotContainer, inputAtBottom && styles.inputAtBottom, chatSessionItems?.length === 0 && styles.showPrompts)}>
+    <div className={cx(styles.supportChatbotContainer, 
+    inputAtBottom && styles.inputAtBottom, 
+    showEvaluate && _.size(chatSessionItems) > 0 && styles.showEvaluate,
+    chatSessionItems?.length === 0 && styles.showPrompts)}>
       <div className={styles.promptsWrapper}>
         {chatSessionItems?.length === 0 && (
           <div className={styles.promptsContainer}>
@@ -48,7 +52,6 @@ function SupportChatbot() {
                   onClick={() => {
                     setPromptMessage(prompt)
                     setNewChat(true)
-                    // onFormSubmit()
                   }}
                 >
                   / {prompt}
@@ -62,7 +65,7 @@ function SupportChatbot() {
         {chatSessionItems?.length > 0 && <ChatContainer />}
       </div>
       
-      <div className={styles.inputContainer}>
+      <div className={cx(styles.inputContainer, showEvaluate && styles.adjustedInputContainer)}>
         <SeekInputArea
           onFormSubmit={() => {
             setInputAtBottom(true)

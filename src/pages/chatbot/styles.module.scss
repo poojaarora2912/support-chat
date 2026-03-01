@@ -7,12 +7,12 @@
   background-color: #fafafa;
   color: #060606;
 
-  .promptsWrapper {
+  & .promptsWrapper {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
 
-    transform: translateY(calc(-50vh + 40rem));
+    transform: translateY(calc(-50vh + 30rem));
     transition: transform 1s ease;
 
     & .promptsContainer {
@@ -55,7 +55,7 @@
   .inputContainer {
     flex-shrink: 0;
     width: 100%;
-    transform: translateY(calc(-50vh + 2rem));
+    transform: translateY(calc(-50vh + 6rem));
     transition: transform 1s ease;
   }
 
@@ -83,7 +83,24 @@
     }
 
     .inputContainer {
-      transform: translateY(-1rem);
+      transform: translateY(-2rem);
     }
+
+    // .adjustedInputContainer {
+    //   transform: translateY(0rem);
+    // }
   }
+}
+
+.showEvaluate {
+    height: calc(100vh - 10rem);
+    // .promptsWrapper {
+    //   transform: translateY(calc(-50vh + 30rem));
+    // }
+    .chatSessionContainer {
+    //   transform: translateY(calc(-50vh + 6rem));
+    }
+    .inputContainer {
+      transform: translateY(0rem);
+    }
 }

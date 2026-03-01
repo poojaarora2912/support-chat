@@ -155,10 +155,6 @@ export default function Evaluation() {
     <div className={styles.container}>
       <div className={styles.inner}>
         <header className={styles.header}>
-          <div className={styles.backButton} onClick={() => navigate('/')}>
-            <i className="fa-solid fa-arrow-left" />
-            <span>Back to chat</span>
-          </div>
 
           <h1 className={styles.title}>Evaluation summary</h1>
 
