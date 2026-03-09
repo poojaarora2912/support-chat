@@ -79,9 +79,10 @@ const ChatSessionItem = ({ item }) => {
         {_.size(item.support_articles) > 0 && (
             <div className={styles.helpText}>Related articles that may help you:</div>
           )}    
-          {_.size(item.support_articles) > 0 && item.support_articles.map((article, index) => (
-            <SupportArticles key={article.id ?? index} article={article} />
-          ))}
+          {_.size(item.support_articles) > 0 &&
+            _.uniqBy(item.support_articles, (a) => a.url).map((article, index) => (
+              <SupportArticles key={article.url ?? index} article={article} />
+            ))}
           </div>
       </div>
     </div>

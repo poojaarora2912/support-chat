@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Button, FormControl, FormGroup, InputGroup } from "react-bootstrap";
 
@@ -21,6 +21,14 @@ export default function SeekInputArea({ onFormSubmit, sessionId, promptMessage, 
       setPromptMessage?.("");
     }
   };
+
+  useEffect(() => {
+    if (promptMessage) {
+      setTimeout(() => {
+        handleSubmit(promptMessage);
+      }, 100);
+    }
+  }, [promptMessage]);
 
   return (
     <div

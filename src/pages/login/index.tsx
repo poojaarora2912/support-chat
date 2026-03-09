@@ -93,7 +93,7 @@ function SignInForm() {
     <div className={styles.formCard}>
       <div className={styles.form}>
         <img src="/images/paperflite.svg" alt="Paperflite" className={styles.logo} width={72} height={72} />
-        <h1 className={styles.header}>Sign in to Paperflite Support Chat</h1>
+        <h1 className={styles.header}>Sign in to Flitecoach</h1>
         <form className={styles.formInner} onSubmit={handleAuthenticate}>
           <button
             type="submit"

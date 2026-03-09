@@ -4,6 +4,8 @@ const ALLOWED_ORIGINS = [
   "https://app.intercom.com", 
   "https://admin-paperflite", 
   "https://adminservice.api.paperflite.com", 
+  "https://admin-api-dev.paperflite.com",
+  "https://admin.api.paperflite.dev",
   "http://localhost:5173/", 
   "https://support.paperflite.com"];
 

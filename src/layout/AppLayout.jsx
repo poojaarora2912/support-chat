@@ -54,7 +54,7 @@ export default function AppLayout() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span className={styles.headerTitle}>Paperflite Support Chatbot</span>
+        <span className={styles.headerTitle}>Flitecoach</span>
         <div className={styles.headerActions}>
           <div className={styles.actionButtons}>
             {(newChat || isEvaluationPage) && (
